@@ -9,40 +9,18 @@ class Block():
         self.visited = set()
         self.maxWeight = maxWeight
     
-    def _addCurrTxn(self, tx):
-        if tx.weight+self.weight <= self.maxWeight:
-            self.txns.append(tx)
-            self.weight += tx.weight
-            self.fee += tx.fee
-            self.visited.add(tx.txid)
-
-
     def add(self, tx, mempool):
-        if tx.cntParent() == 0:
-            self._addCurrTxn(tx)
-        else:
-            # add all the parents
-            for parTxid in tx.parents:
-                if parTxid in self.visited:
-                    continue
-                
-                parIdx = mempool.findIndex(parTxid)
-                par = mempool.txns[parIdx]
-                self.add(par, mempool)
+        if tx.weight+self.weight > self.maxWeight:
+            raise Exception('Exceeding max block weight')
 
-            # now add the child
-            self._addCurrTxn(tx)
+        self.txns.append(tx)
+        self.weight += tx.weight
+        self.fee += tx.fee
 
-    def isValid(self):
-        visitedTxnId = set()
-
-        for tx in self.txns:
-            visitedTxnId.add(tx.txid)
-            for parTxid in tx.parents:
-                if parTxid not in visitedTxnId:
-                    return False
-
-        return True
+        # mark transaction as visited
+        individualTxnIds = tx.txid.split('\n')
+        for individualTxnId in individualTxnIds:
+            self.visited.add(individualTxnId)
 
     def print(self):
         print("transactions: {}".format(self.txns))
