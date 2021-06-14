@@ -1,24 +1,19 @@
 from classes.transaction import Transaction
 from classes.mempool import Mempool
 from classes.block import Block
+from functions.calcBlock import *
 
 def main():
     mempool = Mempool('mempool.csv')
     mempool.parse()
     # mempool.print()
 
-    tx = mempool.txns[993]
+    resultBlock = calcBlock(mempool, 4000000)
 
-    block = Block()
-    block.add(tx, mempool)
-    if block.isValid():
-        print("The block is valid!")
-        print("Block weight: {}".format(block.weight))
-        print("Block fee: {}".format(block.fee))
-    else:
-        print("The block is not valid!!")
+    resultBlock.createTxt()
 
-    block.createTxt()
+    print("The weight of the block is: {}".format(resultBlock.weight))
+    print("The fee of the block is: {}".format(resultBlock.fee))
 
 
 if __name__ == "__main__":

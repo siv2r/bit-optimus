@@ -2,17 +2,19 @@ from classes.transaction import Transaction
 from classes.mempool import Mempool
 
 class Block():
-    def __init__(self):
+    def __init__(self, maxWeight = float('inf')):
         self.txns = []
         self.weight = 0
         self.fee = 0
         self.visited = set()
+        self.maxWeight = maxWeight
     
     def _addCurrTxn(self, tx):
-        self.txns.append(tx)
-        self.weight += tx.weight
-        self.fee += tx.fee
-        self.visited.add(tx.txid)
+        if tx.weight+self.weight <= self.maxWeight:
+            self.txns.append(tx)
+            self.weight += tx.weight
+            self.fee += tx.fee
+            self.visited.add(tx.txid)
 
 
     def add(self, tx, mempool):

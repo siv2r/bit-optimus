@@ -1,4 +1,4 @@
-*.txt
+block_sample.txt
 *.csv
 *.pdf
 .vscode
