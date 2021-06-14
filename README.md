@@ -9,7 +9,7 @@ Mining transactions in an optimal way
 # Approach
 - Iteration 1:
   - sort the mempool data by the metric `fee/weight` in descenting order
-  - start add elememets to the block till its `weight` is less than `4000000`
+  - start add transactions to the block till its `weight` is less than `4000000`
   - **Improvement:** Find a single equivalent block for a block + parents  
 - Iteration 2: coming soon
 
@@ -17,6 +17,11 @@ Mining transactions in an optimal way
 - Iteration 1:
   - Not the most optimal since some transaction requires parents to be added. Blindly adding this parent since, its child has good metric is not optimal
 - Iteration 2: coming soon
+
+# Result
+- Iteration 1:
+  - Block fee: 6345335
+  - Block weight: 4000000
 
 # Reference
 1. https://realpython.com/python-csv/
