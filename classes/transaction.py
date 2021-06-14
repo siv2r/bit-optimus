@@ -15,3 +15,6 @@ class Transaction():
         print("weight: {}".format(self.weight))
         print("parents: {}".format(self.parents))
         print("visited: {}\n".format(self.visited))
+    
+    def cntParent(self):
+        return len(self.parents)
