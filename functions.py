@@ -3,6 +3,18 @@ from classes.mempool import Mempool
 
 
 def isValidBlock(mempool):
+    """Function to check the validity of generated block.txt
+
+    Args:
+        mempool (Mempool): Mempool object that has parsed input
+
+    Raises:
+        Exception: If any transaction is repeated (ie, double spending)
+        Exception: If parent of a transaction is not included before it
+
+    Returns:
+        boolean: True if the block is valid
+    """
     visitedTxnId = set()
 
     with open('block.txt', 'r') as file_handle:

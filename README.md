@@ -34,22 +34,30 @@ Create a block from the pending transactions (`mempool.csv`) that has maximum po
 - ## Intermediate Approach:
   - Not the most optimal since some transaction requires parents to be added. Blindly adding this parent since, its child has good metric is not optimal
 - ## Final Approach: 
-  - 
+  - Hopefully none
+  - Time complexity of few functions like `findTxnIndex()`, `findEqTxnIndex()` can be improved
 
 # Result
 - ## Intermediate Approach 1: 
-  - Block fee: 6345335
-  - Block weight: 4000000
-  - The above result are incorrect, Generated block.txt was not valid
+  - **Block fee:** 6345335 (Incorrect)
+  - **Block weight:** 4000000 (Incorrect)
+  - The above result are incorrect, the generated `block.txt` was not valid
 - ## Intermediate Approach 2:
-  - Block fee: 5714810
-  - Block weight: 3999804
+  - **Block fee:** 5714810
+  - **Block weight:** 3999804
 - ## Final Approach:
-  - Block fee: 5797979
-  - Block weight: 3999808
+  - **Block fee:** 5797979
+  - **Block weight:** 3999808
 
 # My Learnings
-- Write what you learned 
+- Revisited NP Hard, 0/1 Knapsack, Dynamic Programming
+- Better understanding of DFS
+- Learnt the Miner's Fee concept. Hence, got a good overview of bitcoin mining process
+- Better understanding of python function and internals 
+  - Reading CSV files
+  - variable assignment
+  - how python passes arguments (It is neither pass by value not pass by reference)
+  - Debugging python using vscode
 
 # Note
 1. The `mempool.csv` has a column name `parents_`* instead of `parents`.
