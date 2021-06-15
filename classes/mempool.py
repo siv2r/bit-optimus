@@ -20,7 +20,7 @@ class Mempool():
 
     def createOneEqTxn(self, tx):
         # mark the tx as visited
-        self.visitedTxids.add(tx)
+        self.visitedTxids.add(tx.txid)
 
         if tx.cntParent() == 0:
             return tx
@@ -32,16 +32,14 @@ class Mempool():
                 if parTxid in self.visitedTxids:
                     continue
 
-                parIdx = self.findIndex(parTxid)
-                if parIdx == -1:
-                    raise Exception('Parent does not exits')
-                else:
-                    par = self.txns[parIdx]
-                    parEqTxn = self.createOneEqTxn(par)
-                    eqTxnId = parEqTxn.txid if (eqTxnId == '') else eqTxnId + '\n' + parEqTxn.txid
-                    eqTxnFee += parEqTxn.fee
-                    eqTxnWeight += parEqTxn.weight
-            
+                parIdx = self.findTxnIndex(parTxid)
+                par = self.txns[parIdx]
+                parEqTxn = self.createOneEqTxn(par)
+                eqTxnId = parEqTxn.txid if (
+                    eqTxnId == '') else eqTxnId + '\n' + parEqTxn.txid
+                eqTxnFee += parEqTxn.fee
+                eqTxnWeight += parEqTxn.weight
+
             # include curr tx
             eqTxnId = tx.txid if (eqTxnId == '') else eqTxnId + '\n' + tx.txid
             eqTxnFee += tx.fee
@@ -49,32 +47,41 @@ class Mempool():
 
             return Transaction(eqTxnId, eqTxnFee, eqTxnWeight, '')
 
-    def addEqTxnsToPool(self):
-        # find eqTxn for tx with dependencies
+    def createEqTxnPool(self):
+
+        # mark visited nodes none
+        self.visitedTxids = set()
+
         for tx in self.txns:
             # if node is visited move to next
             if tx.txid in self.visitedTxids:
                 continue
 
-            if tx.cntParent() == 0:
-                self.eqTxns.append(tx)
-            else:
-                eqTxn = self.createOneEqTxn(tx)
-                self.eqTxns.append(eqTxn)
-        
+            eqTxn = self.createOneEqTxn(tx)
+            self.eqTxns.append(eqTxn)
+
         # remove all visited txns when creating equivalent transaction
         # is this neccessary?
-        for tx in self.eqTxns:
-            if tx.txid in self.visitedTxids:
-                self.eqTxns.remove(tx)
-                
+        # for tx in self.eqTxns:
+        #     if tx.txid in self.visitedTxids:
+        #         self.eqTxns.remove(tx)
 
-    def findIndex(self, txid):
+    def findTxnIndex(self, txid):
         for i in range(len(self.txns)):
             if self.txns[i].txid == txid:
                 return i
 
-        return -1
+        raise Exception(
+            'transaciton id: {} not present in Mempool.txns'.format(txid))
+
+    def findEqTxnIndex(self, txid):
+        for i in range(len(self.eqTxns)):
+            currEqTxnIds = self.eqTxns[i].txid.split('\n')
+            if txid in currEqTxnIds:
+                return i
+
+        raise Exception(
+            'transaciton id: {} not present in Mempool.txns'.format(txid))
 
     def print(self):
         record = 0
@@ -83,5 +90,3 @@ class Mempool():
             print("Record {}:".format(record))
             # print the transaction
             tx.print()
-    
-    

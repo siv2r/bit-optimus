@@ -17,15 +17,18 @@ Create a block from the pending transactions (`mempool.csv`) that has maximum po
   - Parent transaction should be included before child transaction
 
 # Approach
-- ## Intermediate Approach:
+- ## Intermediate Approach 1:
   - sort the mempool data by `feerate` in descenting order
   - start add transactions to the block till its `weight` is less than `4000000`
   - **Improvement:** Find a single equivalent block for a block + parents  
-- ## Final Approach:
-  - Sort the mempool data by number of parents in descending order
+- ## Intermediate Approach 2:
   - If a transaction has any parent then calculate an equivalent block by combining child block with its parent (Now this equivalent block can be compared with any block present in the mempool)
   - Sort the mempool by `feerate` in descending order
-  - **Improvement** Time complexity of `findIndex()` method in `Mempool class` can be improved
+  - **Improvement** Try to make sure that you create a equivalent transaction which has more number of ancestors first. For the Example: `a->b->c`, we must hit `a` before `b or c` while creating equivalent transaction
+- ## Final Approach:
+  - Sort the mempool by number of ancestors present for a transction in descending order
+  - Follow the same steps from `Intermediate Approach 2` above
+  - **Improvement** Time complexity of `findTxnIndex()`, `findEqTxnIndex()` methods in `Mempool class` can be improved using `dictornary`
 
 # Limitation
 - ## Intermediate Approach:
@@ -34,13 +37,19 @@ Create a block from the pending transactions (`mempool.csv`) that has maximum po
   - 
 
 # Result
-- ## Intermediate Approach:
+- ## Intermediate Approach 1: 
   - Block fee: 6345335
   - Block weight: 4000000
+  - The above result are incorrect, Generated block.txt was not valid
+- ## Intermediate Approach 2:
+  - Block fee: 5714810
+  - Block weight: 3999804
 - ## Final Approach:
   - Block fee: 9065240
   - Block weight: 3992164
 
+# My Learnings
+- Write what you learned 
 
 # Note
 1. The `mempool.csv` has a column name `parents_`* instead of `parents`.
