@@ -60,12 +60,6 @@ class Mempool():
             eqTxn = self.createOneEqTxn(tx)
             self.eqTxns.append(eqTxn)
 
-        # remove all visited txns when creating equivalent transaction
-        # is this neccessary?
-        # for tx in self.eqTxns:
-        #     if tx.txid in self.visitedTxids:
-        #         self.eqTxns.remove(tx)
-
     def findTxnIndex(self, txid):
         for i in range(len(self.txns)):
             if self.txns[i].txid == txid:
@@ -82,6 +76,29 @@ class Mempool():
 
         raise Exception(
             'transaciton id: {} not present in Mempool.txns'.format(txid))
+    
+    def AncestorCnt(self, tx):
+        # mark as visited
+        self.visitedTxids.add(tx.txid)
+
+        if tx.cntParent() == 0:
+            return 0
+        else:
+            ancestors = 0
+            for parId in tx.parents:
+                if parId in self.visitedTxids:
+                    continue
+                parIdx = self.findTxnIndex(parId)
+                par = self.txns[parIdx]
+                ancestors += self.AncestorCnt(par) + 1
+
+            return ancestors
+            
+    def caclAllAncestorCnt(self):
+        for tx in self.txns:
+            # mark all nodes add unvisited
+            self.visitedTxids = set()
+            tx.ancestorCnt = self.AncestorCnt(tx)
 
     def print(self):
         record = 0

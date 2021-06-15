@@ -11,9 +11,9 @@ def main():
 
     # fill data into mempool from the csv
     mempool.parse_csv()
-    # sort by no of ancestors a transaction has in descending order
-    # mempool.txns.sort(key=cmp_to_key(sortByParentCnt))
-    # create equivalent transaction for the transaction containing dependencies (ie, combining parent + child)
+    mempool.caclAllAncestorCnt()
+    mempool.txns.sort(key=cmp_to_key(sortByAncestorCnt))
+
     mempool.createEqTxnPool()
     # sort the eqTxns by Feerate
     mempool.eqTxns.sort(key=cmp_to_key(sortByFeerate))

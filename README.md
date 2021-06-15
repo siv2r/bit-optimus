@@ -28,9 +28,9 @@ Create a block from the pending transactions (`mempool.csv`) that has maximum po
 - ## Final Approach:
   - Sort the mempool by number of ancestors present for a transction in descending order
   - Follow the same steps from `Intermediate Approach 2` above
-  - **Improvement** Time complexity of `findTxnIndex()`, `findEqTxnIndex()` methods in `Mempool class` can be improved using `dictornary`
+  - **Improvement** Time complexity of `findTxnIndex()`, `findEqTxnIndex()` methods in `Mempool class` can be improved using `dictionary` (looping through list in current implementation)
 
-# Limitation
+# Limitations
 - ## Intermediate Approach:
   - Not the most optimal since some transaction requires parents to be added. Blindly adding this parent since, its child has good metric is not optimal
 - ## Final Approach: 
@@ -45,8 +45,8 @@ Create a block from the pending transactions (`mempool.csv`) that has maximum po
   - Block fee: 5714810
   - Block weight: 3999804
 - ## Final Approach:
-  - Block fee: 9065240
-  - Block weight: 3992164
+  - Block fee: 5797979
+  - Block weight: 3999808
 
 # My Learnings
 - Write what you learned 

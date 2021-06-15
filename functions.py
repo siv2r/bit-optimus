@@ -33,8 +33,11 @@ def sortByFeerate(tx1, tx2):
     return feerate2 - feerate1
 
 
-def sortByParentCnt(tx1, tx2):
-    parentCnt1 = tx1.cntParent()
-    parentCnt2 = tx2.cntParent()
+def sortByAncestorCnt(tx1, tx2):
+    ancestorCnt1 = tx1.ancestorCnt
+    ancestorCnt2 = tx2.ancestorCnt
 
-    return parentCnt2 - parentCnt1
+    if ancestorCnt1 == -1 or ancestorCnt2 == -1:
+        raise Exception('Ancestors not assigned')
+
+    return ancestorCnt2 - ancestorCnt1
