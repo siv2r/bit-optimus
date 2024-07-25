@@ -7,10 +7,10 @@ class Block():
         """Constructor for block class
 
         Args:
-            maxWeight (int, optional): Maxmium weight which this block can haven. Defaults to float('inf').
+            maxWeight (int, optional): Maximum weight which this block can haven. Defaults to float('inf').
             txns (list, optional): transactions in this block. Defaults to [].
             weight (int, optional): sum of weight of every transactions present. Defaults to 0.
-            fee (int, optional): summ of fee of every transaction present. Defaults to 0.
+            fee (int, optional): sum of fee of every transaction present. Defaults to 0.
             vis (set, optional): used for marking nodes in DFS. Defaults to set().
         """
         self.txns = txns
@@ -24,8 +24,8 @@ class Block():
 
         Args:
             eqTxn (Transaction): Combining transaction with its ancestors into a single transaction
-            mempool (Mempool): Paresed inputs
-        """        
+            mempool (Mempool): Parsed inputs
+        """
         # mark the eqTxn as visited
         self.visitedEqTxnIds.add(eqTxn.txid)
         eqTxnIds = eqTxn.txid.split('\n')
@@ -50,8 +50,8 @@ class Block():
         """Loops through all the equivalent transaction adds them sequentialy along with its parent. NOTE: the equivalen transaction list must be sorted before using this function
 
         Args:
-            mempool (Mempool): Paresed input
-        """        
+            mempool (Mempool): Parsed input
+        """
         # mark all ids as not visited
         self.visitedTxnIds = set()
 
@@ -69,7 +69,7 @@ class Block():
 
     def createTxt(self):
         """Creates the block.txt
-        """        
+        """
         with open('block.txt', 'w') as file_handle:
             for tx in self.txns:
                 file_handle.write('{}\n'.format(tx.txid))

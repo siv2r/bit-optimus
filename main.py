@@ -26,8 +26,8 @@ def main():
     optBlock.createTxt()
 
     # print the block values
-    print("The weight of the block is: {}".format(optBlock.weight))
-    print("The fee of the block is: {}".format(optBlock.fee))
+    print("Block Weight: {}".format(optBlock.weight))
+    print("Block Fee: {}".format(optBlock.fee))
 
     # check validity of block
     if(isValidBlock(mempool)):

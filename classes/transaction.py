@@ -8,7 +8,7 @@ class Transaction():
             weight (int): size of this transaction
             parents (list): dependencies for this transaction
             ancesCnt (int, optional): number of ancestors for this transaction. Defaults to -1.
-        """        
+        """
         self.txid = txid
         self.fee = int(fee)
         self.weight = int(weight)
@@ -20,6 +20,6 @@ class Transaction():
         print("fee: {}".format(self.fee))
         print("weight: {}".format(self.weight))
         print("parents: {}\n".format(self.parents))
-    
+
     def cntParent(self):
         return len(self.parents)

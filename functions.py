@@ -3,7 +3,7 @@ from classes.mempool import Mempool
 
 
 def isValidBlock(mempool):
-    """Function to check the validity of generated block.txt
+    """Checks the validity of generated block.txt
 
     Args:
         mempool (Mempool): Mempool object that has parsed input

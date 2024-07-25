@@ -11,7 +11,7 @@ class Mempool():
             txns (list, optional): list of all the transaction from input file. Defaults to list().
             eqTxns (list, optional): list of equivalent transaction that will be calculated. Defaults to list().
             vis (set, optional): Used when performing DFS. Defaults to set().
-        """        
+        """
         self.fileName = fileName
         self.txns = list()
         self.eqTxns = list()
@@ -19,7 +19,7 @@ class Mempool():
 
     def parse_csv(self):
         """Parsed the input file and fills the transactions into a list
-        """        
+        """
         with open(self.fileName, 'r') as csv_file:
             csv_reader = csv.DictReader(csv_file)
             idx = 0
@@ -36,7 +36,7 @@ class Mempool():
 
         Returns:
             Transaction: Calculated equivalent transaction
-        """        
+        """
         # mark the tx as visited
         self.visitedTxids.add(tx.txid)
 
@@ -67,7 +67,7 @@ class Mempool():
 
     def createEqTxnPool(self):
         """Creats a new pool of equivalent transaction by looping through all the input transactions
-        """        
+        """
         # mark visited nodes none
         self.visitedTxids = set()
 
@@ -95,7 +95,7 @@ class Mempool():
 
         raise Exception(
             'transaciton id: {} not present in Mempool.txns'.format(txid))
-    
+
     def AncestorCnt(self, tx):
         """Calculate the number ancestors that a given transaction has
 
@@ -104,7 +104,7 @@ class Mempool():
 
         Returns:
             int: number ancestor transactions present
-        """        
+        """
         # mark as visited
         self.visitedTxids.add(tx.txid)
 
@@ -120,10 +120,10 @@ class Mempool():
                 ancestors += self.AncestorCnt(par) + 1
 
             return ancestors
-            
+
     def caclAllAncestorCnt(self):
         """Calculates ancestors for all available transactions
-        """        
+        """
         for tx in self.txns:
             # mark all nodes add unvisited
             self.visitedTxids = set()
