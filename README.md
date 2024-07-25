@@ -1,5 +1,5 @@
 ## Bitcoin-miner
-Mining transactions in an optimal way
+Our project focuses on creating Bitcoin blocks by selecting transactions in a way that optimizes the transaction fees. By implementing a sophisticated algorithm, we aim to maximize the profitability of each block while ensuring efficient and secure transaction processing. This approach helps miners earn higher rewards and contributes to the overall efficiency of the Bitcoin network.
 
 ## Theory behind the challenge (Miner Fee)
 - amount sent = amount recieved + transaction fee
